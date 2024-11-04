@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>Penerbit Buku - Admin Perpustakaan</title>
+        <link rel="stylesheet" href="./css/bootstrap.min.css">
+        <link href="./css/styles.css" rel="stylesheet" />
+        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+    </head>
+    <body class="sb-nav-fixed">
+        <nav class="sb-topnav navbar navbar-expand navbar-dark bg-dark">
+            <!-- Navbar Brand-->
+            <a class="navbar-brand ps-3" href="#">Admin Dashboard</a>
+            <!-- Sidebar Toggle-->
+            <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0" id="sidebarToggle" href="#!"><i class="fas fa-bars"></i></button>
+        </nav>
+        <div id="layoutSidenav">
+            <div id="layoutSidenav_nav">
+                <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                    <div class="sb-sidenav-menu">
+                        <div class="nav">
+                            <div class="sb-sidenav-menu-heading">Menu</div>
+                            <a class="nav-link" href="admin_dashboard.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                                Dashboard
+                            </a>
+                            <a class="nav-link" href="admin_buku.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div>
+                                Buku
+                            </a>
+                            <a class="nav-link" href="admin_kategori_buku.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-book"></i></div>
+                                Kategori Buku
+                            </a>
+                            <a class="nav-link" href="admin_penulis_buku.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-pencil"></i></div>
+                                Penulis
+                            </a>
+                            <a class="nav-link" href="admin_penerbit_buku.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-house"></i></div>
+                                Penerbit
+                            </a>
+                            <a class="nav-link" href="admin_peminjaman_buku.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-hand"></i></div>
+                                Peminjaman
+                            </a>
+                            <a class="nav-link" href="admin_pengaturan.html">
+                                <div class="sb-nav-link-icon"><i class="fas fa-gear"></i></div>
+                                Pengaturan
+                            </a>
+                            <a class="nav-link" href="#">
+                                <div class="sb-nav-link-icon"><i class="fas fa-right-from-bracket"></i></div>
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                    <div class="sb-sidenav-footer">
+                        <div class="small">Logged in as:</div>
+                        Admin Perpustakaan
+                    </div>
+                </nav>
+            </div>
+            <div id="layoutSidenav_content">
+                <main>
+                        <div>
+                            <div class="container my-5">
+                                <h1>Penerbit Buku</h1>
+                                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link active" id="view-tab" data-bs-toggle="tab" data-bs-target="#view" type="button" role="tab" aria-controls="view" aria-selected="true">Lihat Penerbit Buku</button>
+                                    </li>
+                                    <li class="nav-item" role="presentation">
+                                        <button class="nav-link" id="create-tab" data-bs-toggle="tab" data-bs-target="#create" type="button" role="tab" aria-controls="create" aria-selected="false">Tambah Penerbit Buku</button>
+                                    </li>
+                                </ul>
+                                <div class="tab-content" id="myTabContent">
+                                    <!-- Lihat Data Penerbit Buku -->
+                                    <div class="tab-pane fade show active" id="view" role="tabpanel" aria-labelledby="view-tab">
+                                        <h2 class="my-3">Lihat Data Penerbit Buku</h2>
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Nama Penerbit</th>
+                                                    <th>Aksi</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <!-- data penerbit buku -->
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>Gramedia</td>
+                                                    <td>
+                                                        <a href="#update" class="btn btn-warning btn-sm" data-bs-toggle="tab" data-bs-target="#update">Update</a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>Erlangga</td>
+                                                    <td>
+                                                        <a href="#update" class="btn btn-warning btn-sm" data-bs-toggle="tab" data-bs-target="#update">Update</a>
+                                                    </td>
+                                                </tr>
+                                                <!-- Tambahkan data lainnya di sini -->
+                                            </tbody>
+                                        </table>
+                                    </div>
+                        
+                                    <!-- Tambah Data penerbit Buku -->
+                                    <div class="tab-pane fade" id="create" role="tabpanel" aria-labelledby="create-tab">
+                                        <h2 class="my-3">Tambah Penerbit Buku</h2>
+                                        <form>
+                                            <div class="mb-3">
+                                                <label for="kategoriBaru" class="form-label">Nama Kategori Baru</label>
+                                                <input type="text" class="form-control" id="kategoriBaru" placeholder="Masukkan nama penerbit buku">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Tambah Penerbit</button>
+                                        </form>
+                                    </div>
+                        
+                                    <!-- Update Data Penerbit Buku -->
+                                    <div class="tab-pane fade" id="update" role="tabpanel" aria-labelledby="update-tab">
+                                        <h2 class="my-3">Update Penerbit Buku</h2>
+                                        <form>
+                                            <div class="mb-3">
+                                                <label for="penerbitID" class="form-label">ID Penerbit</label>
+                                                <input type="text" class="form-control" id="penerbitID" placeholder="Masukkan ID Penerbit" readonly>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="penerbitNama" class="form-label">Nama Penerbit</label>
+                                                <input type="text" class="form-control" id="penerbitNama" placeholder="Masukkan nama penerbit buku yang baru">
+                                            </div>
+                                            <button type="submit" class="btn btn-warning">Update</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </main>
+                <footer class="py-4 bg-light mt-auto">
+                    <div class="container-fluid px-4">
+                        <div class="d-flex align-items-center justify-content-between small">
+                            <div class="text-muted">Copyright &copy; Web Change Danial 2024</div>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+        <script src="./js/bootstrap.bundle.min.js"></script>
+        <script src="js/scripts.js"></script>
+    </body>
+</html>
