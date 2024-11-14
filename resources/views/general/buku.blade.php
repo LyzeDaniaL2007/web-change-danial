@@ -3,7 +3,6 @@
 @section('title', 'Buku - ' . ($level == 'admin' ? 'Admin' : '') . ' Perpustakaan')
 
 @section('main')
-
     @if ($level === 'admin')
         <div>
             <div class="container my-5">
@@ -137,7 +136,7 @@
                             <hr>
                             <p class="text-center fw-bolder fs-4 my-0">{{ $buku->buku_judul }}</p>
                             <p class="text-center mb-3">Ditulis oleh {{ $buku->relasiPenulis->penulis_nama }}</p>
-                            <form action="{{ route("action.pinjambuku", ['id' => $buku->buku_id]) }}">
+                            <form action="{{ route('action.pinjambuku', ['id' => $buku->buku_id]) }}">
                                 <button class="btn btn-primary d-block mx-auto" type="submit">Pinjam</button>
                             </form>
                         </div>

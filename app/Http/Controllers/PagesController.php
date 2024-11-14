@@ -9,6 +9,8 @@ use App\Models\Penulis;
 use App\Models\Rak;
 use App\Models\Buku;
 use App\Models\Peminjaman;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class PagesController extends Controller
 {
@@ -52,8 +54,16 @@ class PagesController extends Controller
 
   public function peminjamanadmin()
   {
-    return view('general.peminjaman', ['level' => 'admin']);
+    $peminjaman = Peminjaman::with(['buku', 'user'])->get();
+    return view('general.peminjaman', ['level' => 'admin', 'peminjaman' => $peminjaman]);
   }
+
+  public function updatepeminjaman($id)
+  {
+    $peminjaman = Peminjaman::find($id);
+    return view('CRUD.peminjaman.update_peminjaman', ['level' => 'admin', 'peminjaman' => $peminjaman]);
+  }
+
   public function peminjamansiswa()
   {
     $user_id = 'djgkforu12nvoDfg';
@@ -81,15 +91,15 @@ class PagesController extends Controller
     $kategori_fk_field = Kategori::select('kategori_id', 'kategori_nama')->get();
     $penerbit_fk_field = Penerbit::select('penerbit_id', 'penerbit_nama')->get();
     $data = [
-        'rak' => $rak_fk_field,
-        'penulis' => $penulis_fk_field,
-        'kategori' => $kategori_fk_field,
-        'penerbit' => $penerbit_fk_field,
+      'rak' => $rak_fk_field,
+      'penulis' => $penulis_fk_field,
+      'kategori' => $kategori_fk_field,
+      'penerbit' => $penerbit_fk_field,
     ];
 
     // return $data;
 
-    return view('CRUD.buku.create_buku', ['level' => 'admin','data_fk' => $data]);
+    return view('CRUD.buku.create_buku', ['level' => 'admin', 'data_fk' => $data]);
   }
 
   public function buku()
@@ -229,5 +239,31 @@ class PagesController extends Controller
     return view('CRUD.rak.update_rak', ['level' => 'admin'])->with('rak', $rak);
   }
 
-  //
+  //Peminjaman
+
+  public function pinjamBuku($id)
+  {
+    $user_id = 'djgkforu12nvoDfg';
+
+    $buku_detail = Buku::where('buku_id', $id)->first();
+    $peminjaman_id = Str::random(16);
+    $current_date = date("Y-m-d");
+
+    $data_peminjaman = [
+      'peminjaman_id' => $peminjaman_id,
+      'peminjaman_user_id' => $user_id,
+      'peminjaman_tglpinjam' => $current_date,
+      'peminjaman_tglkembali' => $current_date,
+    ];
+
+    $data_detail = [
+      'peminjaman_detail_peminjaman_id' => $peminjaman_id,
+      'peminjaman_detail_buku_id' => $id
+    ];
+
+    DB::table('peminjaman')->insert($data_peminjaman);
+    DB::table('peminjaman_detail')->insert($data_detail);
+
+    return redirect()->route('peminjaman')->with('success', 'Anda telah meminjam buku ' . $buku_detail['buku_judul'] . '!');
+  }
 }

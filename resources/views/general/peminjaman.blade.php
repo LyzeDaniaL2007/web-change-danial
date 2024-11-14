@@ -2,108 +2,192 @@
 
 @section('title', 'Peminjaman - ' . ($level == 'admin' ? 'Admin' : '') . ' Perpustakaan')
 
-
 @section('main')
     @if ($level === 'admin')
-        <div class="container my-5">
-            <h1>Data Peminjaman Buku</h1>
-            <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="view-tab" data-bs-toggle="tab" data-bs-target="#view" type="button"
-                        role="tab" aria-controls="view" aria-selected="true">Lihat Data Peminjaman</button>
-                </li>
-            </ul>
+        <div>
+            <div class="container my-5">
+                <h1>Peminjaman</h1>
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="view-tab" data-bs-toggle="tab" data-bs-target="#view"
+                            type="button" role="tab" aria-controls="view" aria-selected="true">Lihat Peminjaman
+                            Peminjaman</button>
+                    </li>
+                </ul>
 
-            <div class="tab-content" id="myTabContent">
-                <!-- Lihat Data Peminjaman -->
-                <div class="tab-pane fade show active" id="view" role="tabpanel" aria-labelledby="view-tab">
-                    <h2 class="my-3">Lihat Data Peminjaman</h2>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nama Buku</th>
-                                <th>Peminjam</th>
-                                <th>Tanggal Peminjaman</th>
-                                <th>Status</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <!-- Contoh data peminjaman -->
-                            <tr>
-                                <td>1</td>
-                                <td>Bulan</td>
-                                <td>Tere Liye</td>
-                                <td>01-08-2024</td>
-                                <td>Dipinjam</td>
-                                <td>
-                                    <a href="#update" class="btn btn-warning btn-sm" data-bs-toggle="tab"
-                                        data-bs-target="#update">Update Status</a>
-                                    <a href="#denda" class="btn btn-danger" data-bs-toggle="tab"
-                                        data-bs-target="#update">Denda</a>
-                                </td>
-                            </tr>
-                            <!-- Tambahkan data lainnya di sini -->
-                        </tbody>
-                    </table>
-                </div>
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong>Berhasil!</strong> {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @elseif (session('updated'))
+                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                        <strong>Berhasil!</strong> {{ session('updated') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @elseif (session('deleted'))
+                    <div class="alert alert-info alert-dismissible fade show" role="alert">
+                        <strong>Berhasil!</strong> {{ session('deleted') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade show active" id="view" role="tabpanel" aria-labelledby="view-tab">
+                        <h2 class="my-3">Lihat Data Peminjaman</h2>
+                        <a href="#" class="btn btn-primary">Tambahkan Peminjaman</a>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th scope="col">No</th>
+                                    <th scope="col">Peminjam</th>
+                                    <th scope="col">Denda</th>
+                                    <th scope="col">Note</th>
+                                    <th scope="col">Buku</th>
+                                    <th scope="col">Status</th>
+                                    <th scope="col">Tgl Pinjam</th>
+                                    <th scope="col">Tgl Kembali</th>
+                                    <th scope="col">Asik</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($peminjaman as $peminjamans)
+                                    <tr>
+                                        <td>{{ $loop->iteration }}</td>
+                                        <td>{{ $peminjamans->user->user_nama }}</td>
 
-                <!-- Update Status Peminjaman -->
-                <div class="tab-pane fade" id="update" role="tabpanel" aria-labelledby="update-tab">
-                    <h2 class="my-3">Update Status Peminjaman</h2>
-                    <form>
-                        <div class="mb-3">
-                            <label for="peminjamanID" class="form-label">ID Peminjaman</label>
-                            <input type="text" class="form-control" id="peminjamanID"
-                                placeholder="Masukkan ID peminjaman">
-                        </div>
-                        <div class="mb-3">
-                            <label for="statusPeminjaman" class="form-label">Status</label>
-                            <select class="form-select" id="statusPeminjaman">
-                                <option value="Dipinjam">Dipinjam</option>
-                                <option value="Dikembalikan">Dikembalikan</option>
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-warning">Update Status</button>
-                    </form>
+                                        @if ($peminjamans->peminjaman_statuskembali_id == 1)
+                                            <td>Rp{{ $peminjamans->peminjaman_denda_id }}</td>
+                                        @else
+                                            <td>-</td>
+                                        @endif
+
+                                        @if ($peminjamans->peminjaman_statuskembali_id == 1)
+                                            <td>{{ $peminjamans->peminjaman_note_id }}</td>
+                                        @else
+                                            <td>-</td>
+                                        @endif
+
+                                        <td>{{ $peminjamans->buku[0]->buku_judul }}</td>
+
+                                        @if ($peminjamans->peminjaman_statuskembali_id == 1)
+                                            <td>Selesai</td>
+                                        @else
+                                            <td>Belum Kembali</td>
+                                        @endif
+                                        <td>{{ $peminjamans->peminjaman_tglpinjam_id }}</td>
+
+                                        @if ($peminjamans->peminjaman_statuskembali_id == 1)
+                                            <td>{{ $peminjamans->peminjaman_tglkembali_id }}</td>
+                                        @else
+                                            <td>-</td>
+                                        @endif
+                                        <td>
+                                            <div class="d-flex flex-row">
+                                                <a
+                                                    href="{{ route('peminjaman.update', ['id' => $peminjamans->peminjaman_id]) }}">
+                                                    <button class="btn btn-warning"><i class="fas fa-pencil"></i></button>
+                                                </a>
+                                                <form
+                                                    action="{{ route('action.delete.peminjaman', ['id' => $peminjamans->peminjaman_id]) }}"
+                                                    method="POST" class="mx-2">
+                                                    @csrf
+                                                    @method('DELETE')
+
+                                                    <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                                        data-bs-target="#deleteModal">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+
+                                                    <div class="modal fade" id="deleteModal" tabindex="-1">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h1 class="modal-title fs-5">
+                                                                        Konfirmasi</h1>
+                                                                    <button type="button" class="btn-close"
+                                                                        data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    Apakah anda yakin ingin menghapus data ini?
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary"
+                                                                        data-bs-dismiss="modal">Tutup</button>
+                                                                    <button class="btn btn-danger"
+                                                                        type="submit">Hapus</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                @endforeach
+
+                            </tbody>
+
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
-    @elseif ($level === 'siswa')
-        <h1 class="mt-4">Peminjaman Buku</h1>
-        <ol class="breadcrumb mb-4">
-            <li class="breadcrumb-item active">Halaman Peminjaman Buku</li>
-        </ol>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nama Buku</th>
-                    <th>Tanggal Peminjaman</th>
-                    <th>Tanggal Kembali</th>
-                    <th>Status</th>
-                    <th>Denda</th>
-                    <th>Catatan</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($peminjaman as $peminjaman)
+    @elseif ($level == 'siswa')
+        <div class="container-fluid px-4">
+            <h1 class="mt-4">Peminjaman</h1>
+            <ol class="breadcrumb mb-4">
+                <li class="breadcrumb-item active">Halaman Daftar Peminjaman</li>
+            </ol>
+            <table class="table table-striped">
+                <thead>
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
-                        <td>{{ $peminjaman->peminjaman_tglpinjam_id }}</td>
-                        <td>{{ $peminjaman->peminjaman_tglkembali_id }}</td>
-                        <td>
-                            @if ($peminjaman->peminjaman_status_kembali_id)
-                                Selesai
-                            @else
-                                Meminjam
-                            @endif
-                        </td>
+                        <th scope="col">No</th>
+                        <th scope="col">Denda</th>
+                        <th scope="col">Note</th>
+                        <th scope="col">Buku</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Tgl Pinjam</th>
+                        <th scope="col">Tgl Kembali</th>
                     </tr>
-                @endforeach
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach ($peminjaman as $peminjamans)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+
+                            @if ($peminjamans->peminjaman_statuskembali_id == 1)
+                                <td>Rp{{ $peminjamans->peminjaman_denda_id }}</td>
+                            @else
+                                <td>-</td>
+                            @endif
+
+                            @if ($peminjamans->peminjaman_statuskembali_id == 1)
+                                <td>{{ $peminjamans->peminjaman_note_id }}</td>
+                            @else
+                                <td>-</td>
+                            @endif
+
+                            <td>{{ $peminjamans->buku[0]->buku_judul }}</td>
+
+                            @if ($peminjamans->peminjaman_statuskembali_id == 1)
+                                <td>Selesai</td>
+                            @else
+                                <td>Belum Kembali</td>
+                            @endif
+                            <td>{{ $peminjamans->peminjaman_tglpinjam_id }}</td>
+
+                            @if ($peminjamans->peminjaman_statuskembali_id == 1)
+                                <td>{{ $peminjamans->peminjaman_tglkembali_id }}</td>
+                            @else
+                                <td>-</td>
+                            @endif
+
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     @endif
 
 @endsection
