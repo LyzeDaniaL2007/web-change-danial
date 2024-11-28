@@ -16,7 +16,12 @@ class PagesController extends Controller
 {
   public function loginPage()
   {
-    return view('public.login');
+    return view('public.login', ['level' => "admin"]);
+  }
+
+  public function registerPage()
+  {
+    return view('public.register', ['level' => "admin"]);
   }
 
   public function dashboardadmin()

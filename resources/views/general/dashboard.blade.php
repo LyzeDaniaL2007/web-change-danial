@@ -7,6 +7,7 @@
 @endsection
 
 @section('main')
+
 @if ($level === 'admin')
 <div class="container-fluid px-4">
     <h1 class="mt-4">Dashboard</h1>
@@ -52,12 +53,10 @@
         </div>
     </div>
 </div>
-@elseif ($level === 'siswa')
-<div class="container-fluid px-4">
-    <h1 class="mt-4">Dashboard Siswa</h1>
+@elseif ($level == 'siswa')
+<h1 class="mt-4">Dashboard</h1>
     <ol class="breadcrumb mb-4">
-        <li class="breadcrumb-item active">Halaman Dashboard Siswa</li>
+        <li class="breadcrumb-item active">Halaman Dashboard Admin Perpustakaan</li>
     </ol>
-</div>
-@endif
+    @endif
 @endsection
