@@ -12,7 +12,7 @@
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item active">Halaman Update Data Penerbit</li>
         </ol>
-        <form action="{{ route('penerbit.update', ['kate' => $penerbit->penerbit_id]) }}" class="row my-4 gap-3"
+        <form action="{{ route('penerbit.update', ['penerbit_id' => $penerbit->penerbit_id]) }}" class="row my-4 gap-3"
             method="post">
             @csrf
             @method('PATCH')

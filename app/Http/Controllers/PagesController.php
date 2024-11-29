@@ -9,6 +9,7 @@ use App\Models\Penulis;
 use App\Models\Rak;
 use App\Models\Buku;
 use App\Models\Peminjaman;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
@@ -71,7 +72,7 @@ class PagesController extends Controller
 
   public function peminjamansiswa()
   {
-    $user_id = 'djgkforu12nvoDfg';
+    $user_id = Auth::user()->user_id;
     $peminjaman = Peminjaman::with(['buku'])->where('peminjaman_user_id', $user_id)->get();
     // return $peminjaman;
     return view('general.peminjaman', ['level' => 'siswa', 'peminjaman' => $peminjaman]);
@@ -117,8 +118,14 @@ class PagesController extends Controller
   public function update_buku($id)
   {
     $buku = Buku::readBukuById($id);
+    $data_fk  = [
+      'penerbit' => Penerbit::all(),
+      'penulis' => Penulis::all(),
+      'kategori' => Kategori::all(),
+      'rak' => Rak::all(),
+    ];
 
-    return view('CRUD.buku.update_buku', ['level' => 'admin'])->with('buku', $buku);
+    return view('CRUD.buku.update_buku', ['level' => 'admin', 'data_fk' => $data_fk])->with('buku', $buku);
   }
 
   //
@@ -270,5 +277,11 @@ class PagesController extends Controller
     DB::table('peminjaman_detail')->insert($data_detail);
 
     return redirect()->route('peminjaman')->with('success', 'Anda telah meminjam buku ' . $buku_detail['buku_judul'] . '!');
+  }
+
+  public function logout()
+  {
+    Auth::logout();
+    return redirect()->route('login');
   }
 }

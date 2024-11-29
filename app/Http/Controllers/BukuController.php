@@ -19,24 +19,6 @@ class BukuController extends Controller
     return view('views.buku', ['level' => 'admin']);
   }
 
-  public function store(StoreBookRequest $request)
-  {
-    $validated = $request->validated();
-
-    $databuku  = [
-      'kode_buku' => $validated['kode_buku'],
-      'nama_buku' => $validated['nama_buku'],
-      'penerbit_buku' => $validated['penerbit_buku'],
-      'tahun_terbit' => $validated['tahun_terbit'],
-      'penulis_buku' => $validated['penulis_buku']
-    ];
-
-    if ($databuku) {
-      dd($databuku);
-    } else {
-      return back()->WithErrors($validated)->WithInput();
-    }
-  }
 
   public function create(Request $request)
   {
@@ -54,6 +36,12 @@ class BukuController extends Controller
     ];
 
     Buku::createBuku($data);
+
+    if ($request->hasFile('buku_gambar')) {
+      $data = $request->file('buku_gambar');
+
+      Buku::imageUpload($id, $data);
+    }
 
     return redirect()->route('bukuadmin')->with('success', 'Data Buku berhasil ditambahkan!');
   }
@@ -79,7 +67,16 @@ class BukuController extends Controller
   public function delete($id)
   {
     Buku::deleteBuku($id);
-
     return redirect()->route('bukuadmin')->with('deleted', 'Data buku berhasil dihapus!');
+    Buku::imageDelete($id);
+    Buku::where('buku_id', $id)->delete();
+  }
+
+  public function upload_profile(Request $request, $id)
+  {
+
+    return redirect()->route('bukuadmin')->with('success', 'foto profil berhasil diperbarui');
+
+    return back()->with('failed', 'foto profil gagal diperbarui!');
   }
 }

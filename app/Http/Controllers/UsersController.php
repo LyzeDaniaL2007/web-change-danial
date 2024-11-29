@@ -75,4 +75,10 @@ class UsersController extends Controller
 
         return back()->with('failed', 'foto profil gagal diperbarui!');
     }
+
+    public function logout()
+    {
+        Auth::logout();
+        return redirect()->route('login')->with('success', 'Anda telah berhasil logout.');
+    }
 }

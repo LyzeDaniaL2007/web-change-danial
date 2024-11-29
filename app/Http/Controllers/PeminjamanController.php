@@ -8,13 +8,14 @@ use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\PeminjamanDetail;
 use App\Http\Requests\SimpanPeminjamanRequest;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class PeminjamanController extends Controller
 {
     public function store($id)
     {
-        $user_id = "djgkforu12nvoDfg";
+        $user_id = Auth::user()->user_id;
 
         $peminjaman_id = Str::random(16);
         $current_date = date("Y-m-d");
@@ -37,7 +38,7 @@ class PeminjamanController extends Controller
         Peminjaman::create($data_peminjaman);
         PeminjamanDetail::create($data_detail);
 
-        return redirect()->route('peminjamanSiswa', ['action' => 'show'])->with('success', 'Peminjaman berhasil ditambahkan!');
+        return redirect()->route('peminjamansiswa', ['action' => 'show'])->with('success', 'Peminjaman berhasil ditambahkan!');
     }
 
     public function update(Request $request, $id)

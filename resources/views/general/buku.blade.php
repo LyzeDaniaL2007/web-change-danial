@@ -132,12 +132,19 @@
                 @foreach ($buku as $buku)
                     <div class="card col-12 col-md-4 col-lg-3">
                         <div class="card-body">
-                            <img src="./img/bulan.jpg" alt="Bulan" class="book-img">
+                            @if ($buku->buku_urlgambar == '')
+                                <img style="width: 180px; height: 180px;" src="{{ asset('img/book.png') }}" alt="Bulan"
+                                    class="book-img" />
+                            @else
+                                <img style="width: 180px; height: 180px;"
+                                    src="{{ asset('storage/buku_pictures/' . basename($buku['buku_urlgambar'])) }}"
+                                    alt="Bulan" class="book-img" />
+                            @endif
                             <hr>
                             <p class="text-center fw-bolder fs-4 my-0">{{ $buku->buku_judul }}</p>
                             <p class="text-center mb-3">Ditulis oleh {{ $buku->relasiPenulis->penulis_nama }}</p>
                             <form action="{{ route('action.pinjambuku', ['id' => $buku->buku_id]) }}">
-                                <button class="btn btn-primary d-block mx-auto" type="submit">Pinjam</button>
+                                <button class="btn btn-primary d-block mx   -auto" type="submit">Pinjam</button>
                             </form>
                         </div>
                     </div>

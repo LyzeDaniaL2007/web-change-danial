@@ -12,14 +12,15 @@
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item active">Halaman Create Data Buku</li>
         </ol>
-        <form action="{{ route('action.createbuku') }}" class="row my-4 gap-3" method="post">
+        <form action="{{ route('action.createbuku') }}" class="row my-4 gap-3" method="post" enctype="multipart/form-data">
             @csrf
             <div class="form-group col-12 col-md-6 col-lg-4">
+                <label for="judul" class="form-label">Penerbit Buku</label>
                 <select name="buku_penerbit_id" id="buku_penerbit_id" class="form-control">
                     <option selected value="">
                         -Pilih Penerbit Buku-
                     </option>
-                    
+
                     @foreach ($data_fk['penerbit'] as $data)
                         <option value={{ $data->penerbit_id }}>
                             {{ $data->penerbit_nama }}
@@ -28,6 +29,7 @@
                 </select>
             </div>
             <div class="form-group col-12 col-md-6 col-lg-4">
+                <label for="judul" class="form-label">Penulis Buku</label>
                 <select name="buku_penulis_id" id="buku_penulis_id" class="form-control">
                     <option selected value="">
                         -Pilih Penulis Buku-
@@ -40,6 +42,7 @@
                 </select>
             </div>
             <div class="form-group col-12 col-md-6 col-lg-4">
+                <label for="judul" class="form-label">Kategori Buku</label>
                 <select name="buku_kategori_id" id="buku_kategori_id" class="form-control">
                     <option selected value="">
                         -Pilih Kategori Buku-
@@ -52,6 +55,7 @@
                 </select>
             </div>
             <div class="form-group col-12 col-md-6 col-lg-4">
+                <label for="judul" class="form-label">Rak Buku</label>
                 <select name="buku_rak_id" id="buku_rak_id" class="form-control">
                     <option selected value="">
                         -Pilih Rak Buku-
@@ -75,17 +79,15 @@
                 <label for="thnterbit" class="form-label">Tahun Terbit</label>
                 <input type="number" name="thnterbit" id="thnterbit" class="form-control" placeholder=" ">
             </div>
-            <div class="form-group col-12 ccol-md-6 col-lg-4">
-                <label for="formFile" class="form-label">Cover Buku</label>
-                <input class="form-control" type="file" id="formFile">
+            <div class="form-group col-12 col-md-6 col-lg-4">
+                <label for="buku_gambar" class="form-label">Upload Cover</label>
+                <input type="file" name="buku_gambar" id="buku_gambar" class="form-control">
             </div>
             <div class="form-group col-12 col-md-6 col-lg-4">
                 <button class="btn btn-success" type="submit">Tambahkan</button>
             </div>
+
         </form>
     </div>
-    </main>
-    @include('template.footer')
-    </div>
-    </div>
+
 @endsection

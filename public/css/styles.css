@@ -308,6 +308,13 @@ svg {
   vertical-align: middle;
 }
 
+.img-profile {
+  max-width: 150px; /* Atur ukuran maksimum lebar */
+  max-height: 150px; /* Atur ukuran maksimum tinggi */
+  object-fit: cover; /* Agar gambar menyesuaikan dalam lingkaran */
+}
+
+
 table {
   caption-side: bottom;
   border-collapse: collapse;

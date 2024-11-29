@@ -46,7 +46,7 @@
                                     <th scope="col">Status</th>
                                     <th scope="col">Tgl Pinjam</th>
                                     <th scope="col">Tgl Kembali</th>
-                                    <th scope="col">Asik</th>
+                                    <th scope="col">Aksi</th>
                                 </tr>
                             </thead>
                             <tbody>
